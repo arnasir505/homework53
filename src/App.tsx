@@ -19,14 +19,36 @@ function App() {
       taskBody: 'Clean car',
     },
   ]);
+  const [currentTask, setCurrentTask] = useState('');
 
-  const Tasks = tasks.map((task) => {
-    return <Task key={task.id} id={task.id} text={task.taskBody}/>;
+  const tasksList = tasks.map((task) => {
+    return <Task key={task.id} id={task.id} text={task.taskBody} />;
   });
+
+  const handleCurrentTask = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentTask(e.target.value);
+  };
+
+  const addTask = () => {
+    if (currentTask !== '') {
+      const tasksCopy = [...tasks];
+      tasksCopy.push({
+        id: uuidv4(),
+        taskBody: currentTask,
+      });
+      setTasks(tasksCopy);
+      setCurrentTask('');
+    }
+  };
+
   return (
     <>
-      <AddTaskForm />
-      {Tasks}
+      <AddTaskForm
+        value={currentTask}
+        handleChange={handleCurrentTask}
+        handleClick={addTask}
+      />
+      {tasksList}
     </>
   );
 }

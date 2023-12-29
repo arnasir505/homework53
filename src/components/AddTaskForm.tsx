@@ -1,10 +1,16 @@
-const AddTaskForm = () => {
-  return (
-    <form>
-      <input type="text" />
-      <button type='submit'>Add</button>
-    </form>
-  )
+interface FormProps {
+  value: string;
+  handleChange: React.ChangeEventHandler<HTMLInputElement>
+  handleClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
-export default AddTaskForm
+const AddTaskForm: React.FC<FormProps> = ({ value, handleChange, handleClick }) => {
+  return (
+    <form onSubmit={(e) => e.preventDefault()}>
+      <input type='text' value={value} onChange={e => handleChange(e)}/>
+      <button type='submit' onClick={handleClick}>Add</button>
+    </form>
+  );
+};
+
+export default AddTaskForm;
