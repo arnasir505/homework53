@@ -4,8 +4,13 @@ import AddTaskForm from './components/AddTaskForm';
 import { v4 as uuidv4 } from 'uuid';
 import Task from './components/Task';
 
+interface TaskType {
+  id: string;
+  taskBody: string;
+}
+
 function App() {
-  const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState<TaskType[]>([
     {
       id: uuidv4(),
       taskBody: 'Feed dogs',
@@ -20,10 +25,6 @@ function App() {
     },
   ]);
   const [currentTask, setCurrentTask] = useState('');
-
-  const tasksList = tasks.map((task) => {
-    return <Task key={task.id} id={task.id} text={task.taskBody} />;
-  });
 
   const handleCurrentTask = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentTask(e.target.value);
@@ -41,15 +42,32 @@ function App() {
     }
   };
 
+  const removeTask = (taskID: string) => {
+    const index = tasks.findIndex((task) => task.id === taskID);
+    const tasksCopy = [...tasks];
+    tasksCopy.splice(index, 1);
+    setTasks(tasksCopy);
+  };
+
+  const tasksList = tasks.map((task) => {
+    return (
+      <Task
+        key={task.id}
+        text={task.taskBody}
+        handleRemoveClick={() => removeTask(task.id)}
+      />
+    );
+  });
+
   return (
-    <>
+    <div className='app'>
       <AddTaskForm
         value={currentTask}
         handleChange={handleCurrentTask}
-        handleClick={addTask}
+        handleAddClick={addTask}
       />
-      {tasksList}
-    </>
+      {tasks ? tasksList : null}
+    </div>
   );
 }
 

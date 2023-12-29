@@ -2,6 +2,52 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
+.app {
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form input[type='text'] {
+  flex-grow: 1;
+  padding-left: 10px;
+  font-size: 1.1rem;
+}
+
+.task {
+  padding: 10px 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.removeBtn {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.removeBtn:focus {
+  outline: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .task {
+    border: 1px solid #f9f9f9;
+  }
+}
